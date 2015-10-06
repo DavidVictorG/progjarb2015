@@ -8,7 +8,7 @@ HOST = 'localhost'
 SOCKET_LIST = []
 NAME_LIST = []
 RECV_BUFFER = 4096 
-PORT = 1
+PORT = 8888
 
 
 def chat_server():
