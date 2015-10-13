@@ -40,54 +40,49 @@ def chat_server():
 			else:
 				# process data received from client, 
 				try:
-					# Dapat dari socket
+					
 					data = sock.recv(RECV_BUFFER)
 					#data = pickle.loads(data)
 					if data:
 						
-						#broadcast(server_socket, sock, "\r" + '[' + str(sock.getpeername()) + '] ' + data)  
-						#pemisah command dan message
+						#memisahkan komen dan pesan
 						
 						temp1 = string.split(data[:-1])
 						#d= panjang temp1
 						
 						d=len(temp1)
 						
-						#cek kata pertama login, kalau bener masuk ke fungsi login
+						#cek apakah login
 						if temp1[0]=="login" :
 							log_in(sock, str(temp1[1]))
-						#cek kata pertama send, kalau bener masuk elif		
+						#cek apakah send
 						elif temp1[0]=="send" :
-							#logged penanda kamu udah login atau belom
+							#logged utk status sdg/blm
 							logged = 0
 							user = ""
-							#x merupakan iterator sebanyak banyaknya isi array name_list
+
 							for x in range (len(NAME_LIST)):
-								#kalau alamat kita sudah ada di name_list jadi kamu sudah login
+								#penanda sudah login
 								if NAME_LIST[x]==sock:
 									logged=1
-									#masukkan nama user yang diinputkan ke variabel user
+									#input nama 
 									user=NAME_LIST[x+1]
-							#kalau belom login
+
 							if logged==0:
 								send_msg(sock, "Please login first\n")
-							#kalau sudah login
 							else:
 								temp2=""
-								#x merupakan iterator sebanyak panjang temp1
 								for x in range (len(temp1)):
-									#x itu indikator index array temp1
+								 array temp1
 									if x>1:
-										#jika temp2 masih kosong, temp2 diisi kata index ke 2 dari temp1
 										if not temp2:
 											temp2+=str(temp1[x])
-										#jika temp2 sudah ada isinya, temp2 diisi "spasi" lalu kata selanjutnya
+										#jka temp2 sudah terisi,diisi "spasi"
 										else:
 											temp2+=" "
 											temp2+=str(temp1[x])
-								#ini buat ngirim ke user yang menjadi target
+								#send ke satu user
 								for x in range (len(NAME_LIST)):
-									#temp1[1] nama target yang mau dikirim message
 									if NAME_LIST[x]==temp1[1]:
 										send_msg(NAME_LIST[x-1], "["+user+"] : "+temp2+"\n")
 							'''
@@ -123,9 +118,9 @@ def chat_server():
 										else:
 											temp2+=" "
 											temp2+=temp1[x]
-								#broadcast itu seperti codingan seblum nya, ngirim ke semua user
+								
 								broadcast(server_socket, sock, "["+user+"] : "+temp2+"\n")
-						#lihat list user yang terconnect
+						
 						elif temp1[0]=="list" :
 							#send_msg(sock, "cobo\n")
 							logged = 0
@@ -139,7 +134,7 @@ def chat_server():
 							else:
 								temp2=""
 								for x in range (len(NAME_LIST)):
-									#nyari nama dari array name_list yang berada di index ganjil
+									
 									if x%2==1:
 										temp2+=" "
 										temp2+=str(NAME_LIST[x])
@@ -209,7 +204,7 @@ def log_in (sock, user):
 	elif g==1:
 		send_msg(sock, "Username already exist\n")
 	else:
-		#masukkan data user ke array
+		#masukkan data ke array
 		NAME_LIST.append(sock)
 		NAME_LIST.append(user)
 		send_msg(sock, "Login success\n")
