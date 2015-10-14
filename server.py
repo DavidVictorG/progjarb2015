@@ -148,16 +148,6 @@ def chat_server():
 										temp2+=" "
 										temp2+=str(NAME_LIST[x])
 								send_msg(sock, "[List_User] : "+temp2+"\n")
-							
-						elif temp1[0]=="whoami" :
-							g = 0
-							for name in range (len(NAME_LIST)):
-								if NAME_LIST[name]==sock:
-									g = 1
-									send_msg(sock, "Your username is "+str(NAME_LIST[name+1])+"\n")
-							if g==0:
-								send_msg(sock, "You haven't login\n")
-								
 						else:
 							print ('Invalid Command')
 					else:
